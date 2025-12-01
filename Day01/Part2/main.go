@@ -33,11 +33,13 @@ func main() {
 			fmt.Fprintln(os.Stderr, "Failed to parse line: ", lineNum, " ", line)
 		}
 		oldDial := dial
-		dial = (dial + (sign * i)) % 100
-
-		if oldDial >= dial || dial == 0 {
-			zeroPositions += 1
+		dial = (dial + (sign * i))
+		for ; oldDial != dial; oldDial += sign {
+			if oldDial%100 == 0 {
+				zeroPositions += 1
+			}
 		}
+		dial %= 100
 	}
 
 	fmt.Println("Passcode: ", zeroPositions)
