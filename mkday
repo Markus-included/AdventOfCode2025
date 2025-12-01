@@ -33,9 +33,12 @@ GeneratePart() {
 package main
 
 import (
-    "fmt"
-    "os"
-    "strings"
+	"AdventOfCode2025/mprofiler"
+	"fmt"
+	"os"
+	"runtime/debug"
+	"strconv"
+	"strings"
 )
 
 func main() {
@@ -50,6 +53,11 @@ func main() {
     
     fmt.Println("Part $1")
     fmt.Println("Lines:", len(lines))
+
+    debug.SetGCPercent(-1)
+	defer mprofiler.TrackExecutionTime("Day${NUM}Part${1}")()
+
+
 }
 EOF
 }

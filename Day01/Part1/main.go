@@ -1,8 +1,10 @@
 package main
 
 import (
+	"AdventOfCode2025/mprofiler"
 	"fmt"
 	"os"
+	"runtime/debug"
 	"strconv"
 	"strings"
 )
@@ -19,6 +21,9 @@ func main() {
 
 	fmt.Println("Part 1")
 	fmt.Println("Lines:", len(lines))
+
+	debug.SetGCPercent(-1)
+	defer mprofiler.TrackExecutionTime("Day01Part1")()
 
 	dial := 50
 	zeroPositions := 0
