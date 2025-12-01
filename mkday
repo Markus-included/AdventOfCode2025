@@ -1,0 +1,60 @@
+#!/bin/sh
+
+# Check if an argument is provided
+if [ -z "$1" ]; then
+    echo "Please provide a number as an argument."
+    exit 1
+fi
+
+# Validate if the input is a number
+if ! echo "$1" | grep -qE '^[0-9]+$'; then
+    echo "Invalid input: Please enter a valid number."
+    exit 1
+fi
+
+# Add a leading zero if the number is less than 10
+NUM_NO_LEAD_ZERO=$1
+if [ "$1" -lt 10 ]; then
+    NUM=$(printf "%02d" "$1")
+else
+    NUM=$1
+fi
+
+DIR="./Day$NUM"
+mkdir -p "$DIR"
+
+GeneratePart() {
+    PART="Part$1"
+    PART_DIR="$DIR/$PART"
+    mkdir -p "$PART_DIR"
+    PART_FILE="$PART_DIR/main.go"
+
+    cat > "$PART_FILE" << EOF
+package main
+
+import (
+    "fmt"
+    "os"
+    "strings"
+)
+
+func main() {
+    data, err := os.ReadFile("inputs/day$NUM.txt")
+    if err != nil {
+        fmt.Println("Error reading file:", err)
+        return
+    }
+    
+    input := string(data)
+    lines := strings.Split(strings.TrimSpace(input), "\n")
+    
+    fmt.Println("Part $1")
+    fmt.Println("Lines:", len(lines))
+}
+EOF
+}
+
+GeneratePart 1
+GeneratePart 2
+
+git add "$DIR"

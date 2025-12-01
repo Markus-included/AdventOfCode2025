@@ -1,0 +1,17 @@
+#!/bin/bash
+
+mkdir inputs
+
+for i in {1..12}; do
+NUM_NO_LEAD_ZERO=$i
+if [ "$i" -lt 10 ]; then
+    NUM=$(printf "%02d" "$i")
+else
+    NUM=$i
+fi
+
+curl \
+  -H "Cookie: session=${AOC_TOKEN}" \
+  -o "inputs/day${NUM}.txt" \
+  "https://adventofcode.com/2025/day/${i}/input"
+done
