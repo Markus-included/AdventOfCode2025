@@ -42,20 +42,52 @@ func main() {
 	fmt.Println("IDs:", len(ids))
 
 	debug.SetGCPercent(-1)
+	debug.SetMemoryLimit(4 * 1024 * 1024 * 1024)
 	defer mprofiler.TrackExecutionTime("Day02Part1")()
 
 	var sum int64 = 0
 
 	for _, id := range ids {
 		strId := strconv.FormatInt(id, 10)
-		if len(strId)%2 != 0 {
-			continue
+		//if len(strId)%2 != 0 {
+		//	continue
+		//}
+		for chunkSz := 1; chunkSz <= len(strId)/2; chunkSz++ {
+			chunked := ChunkSlice(strId, chunkSz)
+			if AllSameStrings(chunked) {
+				//fmt.Println(id)
+				sum += id
+				goto outer
+			}
 		}
-		if strId[:len(strId)/2] == strId[(len(strId)/2):] {
-			fmt.Println(strId[:len(strId)/2], strId[(len(strId)/2):])
-			sum += id
-		}
+	outer:
 	}
 
 	fmt.Println("Passcode: ", sum)
+}
+
+func ChunkSlice(slice string, chunkSize int) []string {
+	var chunks []string
+	for i := 0; i < len(slice); i += chunkSize {
+		end := i + chunkSize
+
+		// necessary check to avoid slicing beyond
+		// slice capacity
+		if end > len(slice) {
+			end = len(slice)
+		}
+
+		chunks = append(chunks, slice[i:end])
+	}
+
+	return chunks
+}
+
+func AllSameStrings(a []string) bool {
+	for i := 1; i < len(a); i++ {
+		if a[i] != a[0] {
+			return false
+		}
+	}
+	return true
 }

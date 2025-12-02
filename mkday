@@ -54,6 +54,7 @@ func main() {
     fmt.Println("Lines:", len(lines))
 
     debug.SetGCPercent(-1)
+    debug.SetMemoryLimit(4 * 1024 * 1024 * 1024)
 	defer mprofiler.TrackExecutionTime("Day${NUM}Part${1}")()
 
 
