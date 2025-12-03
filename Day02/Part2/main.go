@@ -43,7 +43,7 @@ func main() {
 
 	debug.SetGCPercent(-1)
 	debug.SetMemoryLimit(4 * 1024 * 1024 * 1024)
-	defer mprofiler.TrackExecutionTime("Day02Part1")()
+	defer mprofiler.TrackExecutionTime("Day02Part2")()
 
 	var sum int64 = 0
 

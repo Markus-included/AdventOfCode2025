@@ -33,25 +33,17 @@ GeneratePart() {
 package main
 
 import (
+    "AdventOfCode2025/Day$NUM/common"
 	"AdventOfCode2025/mprofiler"
 	"fmt"
-	"os"
 	"runtime/debug"
-	"strings"
 )
 
 func main() {
-    data, err := os.ReadFile("inputs/day$NUM.txt")
-    if err != nil {
-        fmt.Println("Error reading file:", err)
-        return
-    }
-    
-    input := string(data)
-    lines := strings.Split(strings.TrimSpace(input), "\n")
+    input, _ := common.GetInput()
     
     fmt.Println("Part $1")
-    fmt.Println("Lines:", len(lines))
+    fmt.Println("Input size:", len(input))
 
     debug.SetGCPercent(-1)
     debug.SetMemoryLimit(4 * 1024 * 1024 * 1024)
@@ -61,6 +53,28 @@ func main() {
 }
 EOF
 }
+mkdir -p "$DIR/common/"
+cat > "$DIR/common/common.go" << EOF
+package common
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func GetInput() ([]string, error) {
+	data, err := os.ReadFile("inputs/day${NUM}.txt")
+	if err != nil {
+		fmt.Println("Error reading file:", err)
+		return nil, err
+	}
+
+	input := string(data)
+	lines := strings.Split(strings.TrimSpace(input), "\n")
+	return lines, nil
+}
+EOF
 
 GeneratePart 1
 GeneratePart 2
