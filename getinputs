@@ -10,8 +10,11 @@ else
     NUM=$i
 fi
 
-curl \
+
+curl -s \
   -H "Cookie: session=${AOC_TOKEN}" \
   -o "inputs/day${NUM}.txt" \
   "https://adventofcode.com/2025/day/${i}/input"
+
+  echo "Day$NUM done"
 done
