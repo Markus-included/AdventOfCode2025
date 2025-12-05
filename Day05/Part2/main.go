@@ -18,7 +18,7 @@ func main() {
 	debug.SetMemoryLimit(4 * 1024 * 1024 * 1024)
 	defer mprofiler.TrackExecutionTime("Day05Part2")()
 
-	// TODO: try merging the ranges and then calculating rang.Y - rang.X + 1 to determine the size of each range
+	// Merging the ranges, then calculating rang.Y - rang.X + 1 to determine the size of each range
 	for {
 		merged := 0
 		for i := range freshIdRanges {
