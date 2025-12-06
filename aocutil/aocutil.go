@@ -57,3 +57,19 @@ func Unique[T comparable](s []T) []T {
 	}
 	return result
 }
+
+func Rotate90[T any](mat [][]T) [][]T {
+	n := len(mat)
+	res := make([][]T, n)
+	for i := 0; i < n; i++ {
+		res[i] = make([]T, n)
+	}
+
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			res[j][n-i-1] = mat[i][j]
+		}
+	}
+
+	return res
+}
